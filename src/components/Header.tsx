@@ -1,4 +1,4 @@
-import { TReactNode } from "./App";
+import { TReactNode } from "../lib/types";
 
 export default function Header({ children }: TReactNode) {
   return <header className="header">{children}</header>;

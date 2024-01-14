@@ -1,4 +1,4 @@
-export type TJobITem = {
+export type TJobITems = {
   badgeLetters: string;
   company: string;
   daysAgo: number;
@@ -7,7 +7,7 @@ export type TJobITem = {
   id: number;
 };
 
-export type TJobItemExtended = TJobITem & {
+export type TJobItemExtended = TJobITems & {
   companyURL: string;
   coverImgURL: string;
   description: string;
@@ -16,4 +16,8 @@ export type TJobItemExtended = TJobITem & {
   qualifications: string[];
   reviews: string[];
   salary: string;
+};
+
+export type TReactNode = {
+  children: React.ReactNode;
 };

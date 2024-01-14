@@ -13,17 +13,16 @@ import Pagination from "./PaginationControls";
 import ResultsCount from "./ResultsCount";
 import SortingControls from "./SortingControls";
 import { useDebounce, useJobItems } from "../hooks/hooks";
-export type TReactNode = {
-  children: React.ReactNode;
-};
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const [seacrhText, setSeacrhText] = useState("");
   const debouncedSearchText = useDebounce(seacrhText, 500);
 
-  const { jobItemsSliced, isLoading, totalNumberOfResults } =
-    useJobItems(debouncedSearchText);
+  const { jobItems, isLoading } = useJobItems(debouncedSearchText);
 
+  const jobItemsSliced = jobItems?.slice(0, 7) || [];
+  const totalNumberOfResults = jobItems?.length || 0;
   return (
     <>
       <Background />
@@ -47,6 +46,7 @@ function App() {
         <JobItemContent />
       </Container>
       <Footer />
+      <Toaster position="top-right" />
     </>
   );
 }

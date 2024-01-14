@@ -81,7 +81,9 @@ export default function JobItemContent() {
             </div>
             <ul className="reviews__list">
               {oneJobItem.reviews.map((review) => (
-                <li className="reviews__item">{review}</li>
+                <li key={review} className="reviews__item">
+                  {review}
+                </li>
               ))}
             </ul>
           </section>

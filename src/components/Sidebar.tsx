@@ -1,4 +1,4 @@
-import { TReactNode } from "./App";
+import { TReactNode } from "../lib/types";
 export default function Sidebar({ children }: TReactNode) {
   return <div className="sidebar">{children}</div>;
 }
