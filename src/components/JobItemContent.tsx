@@ -1,4 +1,4 @@
-import { useSaveOneJobItem, useSaveActiveId } from "../hooks/jobItemJook";
+import { useSaveOneJobItem, useSaveActiveId } from "../hooks/hooks";
 import BookmarkIcon from "./BookmarkIcon";
 import Spinner from "./Spinner";
 

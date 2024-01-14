@@ -12,15 +12,17 @@ import JobList from "./JobList";
 import Pagination from "./PaginationControls";
 import ResultsCount from "./ResultsCount";
 import SortingControls from "./SortingControls";
-import { useJobItems } from "../hooks/jobItemJook";
+import { useDebounce, useJobItems } from "../hooks/hooks";
 export type TReactNode = {
   children: React.ReactNode;
 };
 
 function App() {
   const [seacrhText, setSeacrhText] = useState("");
+  const debouncedSearchText = useDebounce(seacrhText, 500);
+
   const { jobItemsSliced, isLoading, totalNumberOfResults } =
-    useJobItems(seacrhText);
+    useJobItems(debouncedSearchText);
 
   return (
     <>

@@ -57,3 +57,19 @@ export function useSaveOneJobItem(id: number | null) {
 
   return { oneJobItem, isLoading } as const;
 }
+
+export function useDebounce<T>(value: T, delay = 500): T {
+  const [debouncedValue, setdebouncedValue] = useState(value);
+  useEffect(() => {
+    if (!value) return;
+    const id = setTimeout(() => {
+      setdebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(id);
+    };
+  }, [value]);
+
+  return debouncedValue;
+}
