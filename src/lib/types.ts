@@ -21,3 +21,7 @@ export type TJobItemExtended = TJobITems & {
 export type TReactNode = {
   children: React.ReactNode;
 };
+
+export type TSortBy = "recent" | "relevant";
+
+export type TDirection = "next" | "previous";
