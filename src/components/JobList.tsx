@@ -1,10 +1,10 @@
 import JobListItem from "./JobListItem";
 import Spinner from "./Spinner";
-import { TJobITem } from "../lib/types";
+import { TJobITems } from "../lib/types";
 import { useSaveActiveId } from "../hooks/hooks";
 
 type TJobListItemProps = {
-  jobItems: TJobITem[];
+  jobItems: TJobITems[];
   isLoading: boolean;
 };
 

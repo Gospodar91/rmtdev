@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchJobItem, fetchJobItems, handleError } from "../lib/utils";
+import { BookMarkContext } from "../contexts/BookMarkContext";
 
 export function useJobItems(seacrhText: string) {
   const { data, isInitialLoading } = useQuery(
@@ -70,6 +71,33 @@ export function useDebounce<T>(value: T, delay = 500): T {
   }, [value, delay]);
 
   return debouncedValue;
+}
+
+export function useLocalStorage<T>(
+  key: string,
+  initialValue: T
+): [T, React.Dispatch<React.SetStateAction<T>>] {
+  // в Generic  функцию передаются по факту setState любого типа и он же возвращается .Сам стейт типа T и диспатч функция реакт этого тиап T
+  //вызов useState через функцию выполняется лишь однажды
+  const [value, setValue] = useState(() =>
+    JSON.parse(localStorage.getItem(key) || JSON.stringify(initialValue))
+  );
+
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(value));
+  }, [key, value]);
+
+  return [value, setValue] as const;
+}
+
+export function useBookmarkContext() {
+  //делаем кастомный хук что б не проверять постоянно на то существует ли контекст
+  const context = useContext(BookMarkContext);
+  if (!context) {
+    throw new Error("Not bookmark context ");
+  }
+
+  return context;
 }
 
 // export function useSaveOneJobItem(id: number | null) {
