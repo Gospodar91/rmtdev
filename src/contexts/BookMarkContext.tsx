@@ -1,10 +1,12 @@
 import { createContext } from "react";
-import { TReactNode } from "../lib/types";
-import { useLocalStorage } from "../hooks/hooks";
+import { TJobItemExtended, TReactNode } from "../lib/types";
+import { useJobItems, useLocalStorage } from "../hooks/hooks";
 
 type TBookMarkContext = {
   bookMarkIds: number[];
   handleBookMarkIds: (id: number) => void;
+  bookMarksJobItems: TJobItemExtended[];
+  isLoading: boolean;
 };
 //Типизируем контекст теми value что передаем или налл если он выйдет вне обертки
 export const BookMarkContext = createContext<TBookMarkContext | null>(null);
@@ -23,9 +25,19 @@ export default function BookMarkContextProvider({ children }: TReactNode) {
       setbookMarkIds((prev) => [...prev, id]);
     }
   }
+  const { jobitems: bookMarksJobItems, isLoading } = useJobItems(bookMarkIds);
+
+  // const { isLoading, jobItems: bookMarksJobItems } = useJobItems("dsa");
 
   return (
-    <BookMarkContext.Provider value={{ bookMarkIds, handleBookMarkIds }}>
+    <BookMarkContext.Provider
+      value={{
+        bookMarkIds,
+        handleBookMarkIds,
+        isLoading,
+        bookMarksJobItems,
+      }}
+    >
       {children}
     </BookMarkContext.Provider>
   );

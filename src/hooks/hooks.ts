@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 import { fetchJobItem, fetchJobItems, handleError } from "../lib/utils";
 import { BookMarkContext } from "../contexts/BookMarkContext";
+import { TJobItemExtended } from "../lib/types";
 
-export function useJobItems(seacrhText: string) {
+export function useSearchQuery(seacrhText: string) {
   const { data, isInitialLoading } = useQuery(
     ["job-items", seacrhText],
     () => (seacrhText ? fetchJobItems(seacrhText) : null),
@@ -93,6 +94,7 @@ export function useLocalStorage<T>(
 export function useBookmarkContext() {
   //делаем кастомный хук что б не проверять постоянно на то существует ли контекст
   const context = useContext(BookMarkContext);
+
   if (!context) {
     throw new Error("Not bookmark context ");
   }
@@ -100,6 +102,26 @@ export function useBookmarkContext() {
   return context;
 }
 
+export function useJobItems(ids: number[]) {
+  const result = useQueries({
+    queries: ids.map((id) => ({
+      queryKey: ["job-item", id],
+      queryFn: () => fetchJobItem(id),
+      staleTime: 1000 * 60, //время кеша
+      refetchOnWindowFocus: false,
+      onError: handleError,
+      enabled: Boolean(id), // необходимость делать запрос первичный
+      retry: false, // при ошибке
+    })),
+  });
+  //as -force for ts to apply type
+  const jobItemsArray = result
+    .map((el) => el.data?.jobItem)
+    .filter((el) => Boolean(el)) as TJobItemExtended[];
+  const isLoading = result.some((el) => el.isLoading);
+
+  return { jobitems: jobItemsArray, isLoading };
+}
 // export function useSaveOneJobItem(id: number | null) {
 //   const [oneJobItem, setOneJobItem] = useState<TJobItemExtended | null>(null);
 //   const [isLoading, setisLoading] = useState(false);
