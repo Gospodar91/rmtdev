@@ -3,6 +3,7 @@ import { useQueries, useQuery } from "@tanstack/react-query";
 import { fetchJobItem, fetchJobItems, handleError } from "../lib/utils";
 import { BookMarkContext } from "../contexts/BookMarkContext";
 import { TJobItemExtended } from "../lib/types";
+import { ActiveIdContext } from "../contexts/ActiveIdContext";
 
 export function useSearchQuery(seacrhText: string) {
   const { data, isInitialLoading } = useQuery(
@@ -121,6 +122,32 @@ export function useJobItems(ids: number[]) {
   const isLoading = result.some((el) => el.isLoading);
 
   return { jobitems: jobItemsArray, isLoading };
+}
+
+export function useClickOutside(
+  //Тип рефов -массив
+  refs: React.RefObject<HTMLElement>[],
+  handler: () => void
+) {
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (refs.every((ref) => !ref.current?.contains(e.target as Node))) {
+        handler();
+      }
+    };
+    document.addEventListener("click", handleClick);
+
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, [refs, handler]);
+}
+export function useActiveIdContext() {
+  const context = useContext(ActiveIdContext);
+  if (!context) {
+    throw new Error("Active ID outside context ");
+  }
+  return context;
 }
 // export function useSaveOneJobItem(id: number | null) {
 //   const [oneJobItem, setOneJobItem] = useState<TJobItemExtended | null>(null);

@@ -1,9 +1,9 @@
-import { useSaveOneJobItem, useSaveActiveId } from "../hooks/hooks";
+import { useActiveIdContext, useSaveOneJobItem } from "../hooks/hooks";
 import BookmarkIcon from "./BookmarkIcon";
 import Spinner from "./Spinner";
 
 export default function JobItemContent() {
-  const activeId = useSaveActiveId();
+  const { activeId } = useActiveIdContext();
   const { oneJobItem, isLoading } = useSaveOneJobItem(activeId);
 
   if (isLoading) {
