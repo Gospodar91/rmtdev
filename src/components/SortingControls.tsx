@@ -1,25 +1,20 @@
-import React from "react";
-import { TSortBy } from "../lib/types";
+import { useJobItemsContext } from "../hooks/hooks";
 
-type TSortByProps = {
-  sortBy: TSortBy;
-  onClick: (sortOption: TSortBy) => void;
-};
-
-export default function Sorting({ sortBy, onClick }: TSortByProps) {
+export default function Sorting() {
+  const { sortBy, handleSortBy } = useJobItemsContext();
   return (
     <section className="sorting">
       <i className="fa-solid fa-arrow-down-short-wide"></i>
 
       <SortingButton
         isActive={sortBy === "relevant" ? true : false}
-        onClick={() => onClick("relevant")}
+        onClick={() => handleSortBy("relevant")}
       >
         Relevant
       </SortingButton>
       <SortingButton
         isActive={sortBy === "recent" ? true : false}
-        onClick={() => onClick("recent")}
+        onClick={() => handleSortBy("recent")}
       >
         Recent
       </SortingButton>

@@ -1,12 +1,7 @@
-type TSeacrhFormProps = {
-  seacrhText: string;
-  setSeacrhText: (value: string) => void;
-};
+import { useSeacrhTextContext } from "../hooks/hooks";
 
-export default function SearchForm({
-  seacrhText,
-  setSeacrhText,
-}: TSeacrhFormProps) {
+export default function SearchForm() {
+  const { seacrhText, handleSeacrhText } = useSeacrhTextContext();
   return (
     <form action="#" className="search">
       <button type="submit">
@@ -15,7 +10,7 @@ export default function SearchForm({
 
       <input
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          setSeacrhText(e.target.value)
+          handleSeacrhText(e.target.value)
         }
         value={seacrhText}
         spellCheck="false"

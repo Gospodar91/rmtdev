@@ -1,10 +1,7 @@
-type TresultCountProps = {
-  totalNumberOfResults: number;
-};
+import { useJobItemsContext } from "../hooks/hooks";
 
-export default function ResultsCount({
-  totalNumberOfResults,
-}: TresultCountProps) {
+export default function ResultsCount() {
+  const { totalNumberOfResults } = useJobItemsContext();
   return (
     <p className="count">
       <span className="u-bold">{totalNumberOfResults}</span>

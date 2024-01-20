@@ -4,6 +4,8 @@ import { fetchJobItem, fetchJobItems, handleError } from "../lib/utils";
 import { BookMarkContext } from "../contexts/BookMarkContext";
 import { TJobItemExtended } from "../lib/types";
 import { ActiveIdContext } from "../contexts/ActiveIdContext";
+import { SearchContext } from "../contexts/SeacrhTextContext";
+import { JobItemsContext } from "../contexts/JobItemsContext";
 
 export function useSearchQuery(seacrhText: string) {
   const { data, isInitialLoading } = useQuery(
@@ -149,6 +151,23 @@ export function useActiveIdContext() {
   }
   return context;
 }
+
+export function useSeacrhTextContext() {
+  const context = useContext(SearchContext);
+  if (!context) {
+    throw new Error("useSeacrhTextContext outside context ");
+  }
+  return context;
+}
+
+export function useJobItemsContext() {
+  const context = useContext(JobItemsContext);
+  if (!context) {
+    throw new Error("JobItemsContext outside context ");
+  }
+  return context;
+}
+
 // export function useSaveOneJobItem(id: number | null) {
 //   const [oneJobItem, setOneJobItem] = useState<TJobItemExtended | null>(null);
 //   const [isLoading, setisLoading] = useState(false);
