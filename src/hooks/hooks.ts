@@ -51,6 +51,7 @@ export function useSaveActiveId() {
       setActiveId(Number(window.location.hash.slice(1)));
     }
     handeSetActiveID();
+    console.log("111", 111);
     window.addEventListener("hashchange", handeSetActiveID);
 
     return () => {
